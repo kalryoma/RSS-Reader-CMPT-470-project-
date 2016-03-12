@@ -1,0 +1,56 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class='row'>
+	<div class="valign-wrapper">
+		<div class="valign center" style="width: 100%;">
+			<h2 class='cyan-text text-darken-3' style='text-align:center'></h2><br>
+		</div>
+	</div>
+	<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }, :html => {class: 'col s12 offset-m2 m8 offset-l3 l6'}) do |f| %>
+	<%= f.hidden_field :reset_password_token %>
+	<div class="card-panel z-depth-1">
+		<div class='row col s12'>
+			<div class="input-field">
+				<i class="material-icons prefix">account_circle</i>
+				<%= f.label :email %><br />
+				<%= f.email_field :email, autofocus: true %>
+			</div>
+		</div>
+		<% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+			<div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+		<% end %>
+		<div class='row'>
+			<div class="input-field col s12">
+				<i class="material-icons prefix">lock_outline</i>
+				<%= f.label :current_password %> <br />
+				<%= f.password_field :current_password, autocomplete: "off" %>
+			</div>
+		</div>
+		<div class='row'>
+			<div class="input-field col s12">
+				<i class="material-icons prefix">lock_outline</i>
+				<%= f.label :new_password %> <br />
+				<%= f.password_field :new_password, autocomplete: "off" %>
+			</div>
+		</div>
+		<div class='row'>
+			<p><i>(leave blank if you don't want to change it)</i></p>
+		</div>
+		<div class='row'>
+			<div class="input-field col s12">
+				<i class="material-icons prefix">lock_outline</i>
+				<%= f.label :confirm_password %><br />
+				<%= f.password_field :confirm_password, autocomplete: "off" %>
+			</div>
+		</div>
+		<%= devise_error_messages! %>
+		<div class='row red-text'>
+			<div class='col s12 center'>
+			<%= button_tag(type: "submit", :class => "btn waves-effect waves-light") do %>
+				Update
+				<i class="material-icons right">backup</i>
+			<% end %>
+			</div>
+		</div>
+	</div>
+	<% end %>
+</div>

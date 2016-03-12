@@ -1,0 +1,43 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class='row'>
+	<div class="valign-wrapper">
+		<div class="valign center" style="width: 100%;">
+			<h2 class='cyan-text text-darken-3' style='text-align:center'></h2><br>
+		</div>
+	</div>
+	<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }, :html => {class: 'col s12 offset-m2 m8 offset-l3 l6'}) do |f| %>
+	<%= f.hidden_field :reset_password_token %>
+	<div class="card-panel z-depth-1">
+		<div class='row col s12'>
+			<div class="input-field">
+				<i class="material-icons prefix">account_circle</i>
+				<%= f.label :password, "New password" %><br />
+				<%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+			</div>
+		</div>
+		<div>
+			<p>
+				<% if @minimum_password_length %>
+					<em>*should be at least <%= @minimum_password_length %> characters</em>
+				<% end %>
+			</p>
+		</div>
+		<div class='row'>
+			<div class="input-field col s12">
+				<i class="material-icons prefix">lock_outline</i>
+				<%= f.label :password_confirmation, "Confirm new password" %><br />
+				<%= f.password_field :password_confirmation, autocomplete: "off" %>
+			</div>
+		</div>
+		<%= devise_error_messages! %>
+		<div class='row red-text'>
+			<div class='col s12 center'>
+			<%= button_tag(type: "submit", :class => "btn waves-effect waves-light") do %>
+				Change my password
+				<i class="material-icons left">lock</i>
+			<% end %>
+			</div>
+		</div>
+	</div>
+	<% end %>
+</div>

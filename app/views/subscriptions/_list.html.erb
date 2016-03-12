@@ -1,0 +1,25 @@
+<div class="row">
+	<table class="card-panel z-depth-1 hoverable col s12 offset-m2 m8 offset-l3 l6">
+			<thead>
+			</thead>
+			<tbody>
+				<% (0..@counter).each do |counter| %>
+				<tr>
+					<% @feedlist[counter].each do |feed| %>
+						<% feed.id %>
+						<td style="text-align:center; font-size:1.5em;">
+							<%= link_to feed.name, {:controller=>:feeds, :action=>:list, :address=>feed.source}, :class=>"black-text" %>
+						</td>
+						<td style="text-align:center">
+							<%= link_to '<i class="material-icons">delete</i>'.html_safe,
+								subscriptions_delete_path(:subscription=>{:feed_id=>feed.id}),
+								:class=>"btn-floating red",
+								data: { confirm: 'Are you sure?' } %>
+						</td>
+						<% feed.source %>
+					<% end %>
+				</tr>
+				<% end %>
+			</tbody>
+	</table>
+</div>

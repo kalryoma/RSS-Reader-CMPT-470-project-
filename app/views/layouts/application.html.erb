@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RSS Reader</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class='amber lighten-5' style="display: flex; min-height: 100vh; flex-direction: column;">
+	<header>
+	<nav>
+		<div class='nav-wrapper'>
+			<a href="/" class='brand-logo center'>RSS Reader</a>
+			<ul id='nav-mobile' class='right hide-on-med-and-down'>
+				<% if current_user %>
+				<li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+				<li><%= link_to('Change Password', edit_registration_path(:user)) %></li>
+				<% else %>
+				<li><%= link_to('Sign Up', new_registration_path(:user)) %></li>
+				<li><%= link_to('Login', new_session_path(:user)) %></li>
+				<% end %>
+			</ul>
+		</div>
+	</nav>
+	</header>
+	<main style='flex: 1 0 auto;'>
+		<%= yield %>
+	</main>
+	<footer class="page-footer" style="margin:0">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">Group 5</h5>
+					<h6 class="white-text">Chang Su</h6>
+					<h6 class="white-text">Jiahao Ke</h6>
+					<h6 class="white-text">Min Yang</h6>
+					<h6 class="white-text">Xiaoyu Wang</h6>
+					<h6 class="white-text">Zhenqi Zhu</h6>
+				</div>
+				<div class="col l4 offset-l2 s12">
+					<h5><a href="https://csil-git1.cs.surrey.sfu.ca/xwa129/rssReader" class="white-text">Gitlab</a></h5>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2015 Copyright Text
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

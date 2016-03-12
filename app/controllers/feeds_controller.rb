@@ -1,0 +1,88 @@
+class FeedsController < ApplicationController
+    before_action :authenticate_user!
+
+    def list
+        @url = params[:address]
+
+        # Add one of read time in the database
+        @feed=Feed.where("source=?",@url)
+        if @feed[0].ReadNumber.nil?
+            @feed[0].ReadNumber=1
+            @feed[0].save
+        else
+            @feed[0].ReadNumber=@feed[0].ReadNumber+1
+            @feed[0].save
+        end
+
+        @feed = Feedjira::Feed.fetch_and_parse @url
+        # Not used in frontend
+        @result=@feed.title
+
+    end
+
+    # Save the feed info
+    def save
+        @feed=params[:feed]
+        @url=@feed[:source]
+
+        @feed_temp= Feedjira::Feed.fetch_and_parse @url
+
+        # Probe if the feed exist
+
+        @veify=Feed.where("source=?", @url)
+
+
+        if @verify.nil?
+            @feed=Feed.new();
+            @feed.name=@feed_temp.title
+            ### Saved url is the url to retrieve rss info, different from the url in rss
+            @feed.source=@url
+            @feed.save
+        end
+
+        @feed=Feed.where("source=?", @url)
+        @feed_id=@feed[0].id
+
+        # Probe if the feed is in users scbscription list
+
+        @subscription_probe=Subscription.where("feed_id=?",@feed_id)
+
+        if @subscription_probe.empty?
+            # Use empty here for where returns an array
+            @subscription={}
+            @subscription[:feed_id]=@feed_id
+            redirect_to :controller=>'subscriptions', :action=>'add', :subscription=>@subscription
+        end
+
+        # If in list, back to index
+
+        # redirect_to :controller=>'subscriptions', :action=>'index'
+
+    end
+
+    # Provide test save action form
+    def create
+        @feed=Feed.new()
+    end
+
+   def search_input
+        @feed=Feed.new()
+    end
+
+    def search
+        keyword=params[:feed][:source]
+        counter=0
+        @feed=Array.new()
+        feedlist=Feed.all
+        feedlist.each do |feedsource|
+            entries_tmp=Feedjira::Feed.fetch_and_parse feedsource.source
+            entries_tmp.entries.each do |article|
+                if article.title.index(keyword)
+                    @feed[counter]=article
+                    counter+=1
+                end
+            end
+        end
+    end
+
+end

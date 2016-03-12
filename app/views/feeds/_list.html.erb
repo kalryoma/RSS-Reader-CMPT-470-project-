@@ -1,0 +1,38 @@
+<br>
+<div class="row">
+	<div class="col s12 offset-m2 m8 offset-l3 l6">
+		<ul class="tabs">
+			<li class="tab">
+				<a href="<%= @feed.url %>" style="font-size:1.5em">
+					<%= @feed.title %>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<% @feed.entries.each do |f| %>
+<div class="row">
+	<div class="col s12 offset-m2 m8 offset-l3 l6">
+		<div class="card">
+			<% if f.image %>
+				<div class="card-image waves-effect waves-block waves-light">
+					<img src="<%= f.image %>">
+				</div>
+			<%end%>
+			<div class="card-content waves-effect waves-block waves-light">
+				<span class="card-title black-text"><%= f.title %></span><br>
+				<span class="card-title black-text" style="font-size:1em"><%= f.author %></span>
+				<p><%= f.summary %></p>
+			</div>
+			<div class="card-action">
+				<a href="<%= f.url %>" class="btn waves-effect waves-light orange accent-2 white-text">Read all</a>
+				<button class="activator btn-floating waves-effect waves-light right orange"><i class="material-icons">share</i></button>
+			</div>
+			<div class="card-reveal">
+				<span class="card-title orange-text text-darken-4">Share<i class="material-icons right">close</i></span>
+				<%= social_share_button_tag(f.title, :url => f.url)%>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>

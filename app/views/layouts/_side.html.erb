@@ -1,0 +1,11 @@
+<div class="fixed-action-btn" style="bottom: 20%; right: 2%;">
+	<a class="btn-floating btn-large teal lighten-1">
+		<i class="mdi-navigation-menu"></i>
+	</a>
+	<ul>
+		<li><%= link_to '<i class="material-icons">visibility</i>'.html_safe, {:controller=>:subscriptions, :action=>:ratelist}, :class=>"btn-floating red lighten-1" %></li>
+		<li><%= link_to '<i class="material-icons">search</i>'.html_safe, {:controller=>:feeds, :action=>:search_input}, :class=>"btn-floating teal accent-3" %></li>
+		<li><%= link_to '<i class="material-icons">list</i>'.html_safe, {:controller=>:subscriptions, :action=>:list}, :class=>"btn-floating yellow darken-3" %></li>
+		<li><%= link_to '<i class="material-icons">add</i>'.html_safe, {:controller=>:feeds, :action=>:create}, :class=>"btn-floating light-blue accent-2" %></li>
+	</ul>
+</div>
